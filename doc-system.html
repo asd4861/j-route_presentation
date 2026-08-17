@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>システム設計図 — J-Route</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+<style>
+  :root{--primary:#6366f1;--accent:#ff8c69;--success:#34d399;--danger:#f87171;--bg:#0d0f1a;--card:#161929;--border:rgba(255,255,255,0.08);--text:#e2e8f0;--muted:#94a3b8;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;padding:40px 24px;min-height:100vh;}
+  .container{max-width:1000px;margin:0 auto;}
+  .back{display:inline-flex;align-items:center;gap:8px;color:var(--muted);text-decoration:none;font-size:0.88rem;margin-bottom:32px;transition:color .2s;}
+  .back:hover{color:var(--primary);}
+  .doc-tag{display:inline-block;background:rgba(99,102,241,0.15);color:var(--primary);border:1px solid rgba(99,102,241,0.3);border-radius:20px;padding:4px 14px;font-size:0.78rem;font-weight:600;margin-bottom:14px;}
+  h1{font-size:2rem;font-weight:700;margin-bottom:8px;}
+  .doc-meta{color:var(--muted);font-size:0.88rem;margin-bottom:36px;}
+  .section{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px 32px;margin-bottom:24px;}
+  .section-title{font-size:1rem;font-weight:700;color:var(--primary);margin-bottom:20px;display:flex;align-items:center;gap:8px;padding-bottom:12px;border-bottom:1px solid var(--border);}
+  /* Architecture flow */
+  .arch-flow{display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:center;padding:12px 0;}
+  .arch-box{background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.3);border-radius:12px;padding:14px 20px;text-align:center;min-width:120px;}
+  .arch-box.ext{background:rgba(52,211,153,0.08);border-color:rgba(52,211,153,0.3);}
+  .arch-box.db{background:rgba(248,113,113,0.08);border-color:rgba(248,113,113,0.3);}
+  .arch-box .icon{font-size:1.4rem;margin-bottom:4px;}
+  .arch-box .label{font-weight:700;font-size:0.88rem;}
+  .arch-box .sub{font-size:0.75rem;color:var(--muted);margin-top:2px;}
+  .arrow{color:var(--muted);font-size:1.2rem;}
+  /* Route table */
+  table{width:100%;border-collapse:collapse;font-size:0.86rem;}
+  th{background:rgba(99,102,241,0.1);color:var(--primary);font-weight:600;padding:10px 14px;text-align:left;border-bottom:1px solid var(--border);}
+  td{padding:9px 14px;border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:top;line-height:1.6;}
+  tr:last-child td{border-bottom:none;}
+  code{background:rgba(99,102,241,0.12);color:#a5b4fc;padding:1px 7px;border-radius:4px;font-size:0.82rem;}
+  .badge{display:inline-block;padding:2px 9px;border-radius:20px;font-size:0.73rem;font-weight:600;}
+  .get{background:rgba(52,211,153,0.15);color:var(--success);}
+  .post{background:rgba(99,102,241,0.15);color:var(--primary);}
+  .del{background:rgba(248,113,113,0.15);color:var(--danger);}
+  .put{background:rgba(251,191,36,0.15);color:#fbbf24;}
+  .layer{display:flex;flex-direction:column;gap:10px;}
+  .layer-row{display:flex;gap:10px;flex-wrap:wrap;}
+  .layer-item{flex:1;min-width:140px;background:rgba(99,102,241,0.06);border:1px solid rgba(99,102,241,0.2);border-radius:10px;padding:12px 14px;font-size:0.83rem;}
+  .layer-item h4{font-size:0.82rem;color:var(--primary);margin-bottom:6px;}
+  .layer-label{font-size:0.75rem;font-weight:700;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;margin-bottom:8px;}
+</style>
+</head>
+<body>
+<div class="container">
+  <a href="index.html#slide-5" class="back"><i class="bi bi-arrow-left"></i> 発表に戻る</a>
+  <div class="doc-tag">② システム設計図</div>
+  <h1>全体アーキテクチャ · API ルーティング</h1>
+  <p class="doc-meta">J-Route プロジェクト &nbsp;·&nbsp; Spring Boot 3.2 / MyBatis / MySQL</p>
+
+  <!-- System Architecture -->
+  <div class="section">
+    <div class="section-title"><i class="bi bi-diagram-3"></i> システムアーキテクチャ (3-Tier)</div>
+    <div class="arch-flow">
+      <div class="arch-box"><div class="icon">🌐</div><div class="label">Browser</div><div class="sub">Thymeleaf / JS / CSS</div></div>
+      <div class="arrow">⇄</div>
+      <div class="arch-box"><div class="icon">⚙️</div><div class="label">Spring Boot</div><div class="sub">Controller → Service → Mapper</div></div>
+      <div class="arrow">⇄</div>
+      <div class="arch-box db"><div class="icon">🗄️</div><div class="label">MySQL</div><div class="sub">8.0 · MyBatis ORM</div></div>
+    </div>
+    <div class="arch-flow" style="margin-top:8px;">
+      <div class="arch-box ext"><div class="icon">🤖</div><div class="label">Gemini AI</div><div class="sub">Google AI API</div></div>
+      <div class="arch-box ext"><div class="icon">🗺️</div><div class="label">Google Maps</div><div class="sub">Places SDK JS</div></div>
+      <div class="arch-box ext"><div class="icon">☁️</div><div class="label">Open-Meteo</div><div class="sub">Weather REST API</div></div>
+    </div>
+    <p style="font-size:0.82rem;color:var(--muted);text-align:center;margin-top:12px;">↑ 外部API はすべて Spring Boot バックエンド経由でオーケストレーション制御</p>
+  </div>
+
+  <!-- Layer Structure -->
+  <div class="section">
+    <div class="section-title"><i class="bi bi-layers"></i> アプリケーション レイヤー構成</div>
+    <div class="layer">
+      <div class="layer-label">Presentation Layer</div>
+      <div class="layer-row">
+        <div class="layer-item"><h4>Controller</h4>HTTP リクエスト受付 → サービス呼出 → Thymeleaf / JSON 返却</div>
+        <div class="layer-item"><h4>Thymeleaf Templates</h4>サーバーサイドレンダリング。レイアウトダイアレクトでコンポーネント化。</div>
+        <div class="layer-item"><h4>JavaScript / AJAX</h4>非同期API呼び出し (ウィッシュリスト・地図等)</div>
+      </div>
+      <div class="layer-label" style="margin-top:8px;">Business Logic Layer</div>
+      <div class="layer-row">
+        <div class="layer-item"><h4>Service / Config</h4>ビジネスルール。SecurityConfig でアクセス制御定義。</div>
+        <div class="layer-item"><h4>AI Orchestration</h4>Gemini API ×2 を順次呼び出し (生成 → 最適化)</div>
+        <div class="layer-item"><h4>DTO</h4>レイヤー間データ転送オブジェクト。Lombok @Data 使用。</div>
+      </div>
+      <div class="layer-label" style="margin-top:8px;">Data Access Layer</div>
+      <div class="layer-row">
+        <div class="layer-item"><h4>MyBatis Mapper</h4>アノテーション & XML 方式でSQL定義</div>
+        <div class="layer-item"><h4>MySQL Database</h4>テーブル設計 → ERD 参照</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Routing Table -->
+  <div class="section">
+    <div class="section-title"><i class="bi bi-signpost-2"></i> 主要 URL ルーティング一覧</div>
+    <table>
+      <thead><tr><th>Method</th><th>URL</th><th>Controller</th><th>説明</th><th>認証</th></tr></thead>
+      <tbody>
+        <tr><td><span class="badge get">GET</span></td><td><code>/</code></td><td>MainController</td><td>メインページ</td><td>未要</td></tr>
+        <tr><td><span class="badge get">GET</span></td><td><code>/user/login</code></td><td>UserController</td><td>ログインページ表示</td><td>未要</td></tr>
+        <tr><td><span class="badge post">POST</span></td><td><code>/loginProc</code></td><td>Security</td><td>ログイン処理 (Spring Security)</td><td>未要</td></tr>
+        <tr><td><span class="badge get">GET</span></td><td><code>/user/register</code></td><td>UserController</td><td>会員登録ページ</td><td>未要</td></tr>
+        <tr><td><span class="badge post">POST</span></td><td><code>/user/register</code></td><td>UserController</td><td>会員登録処理 (BCrypt暗号化)</td><td>未要</td></tr>
+        <tr><td><span class="badge get">GET</span></td><td><code>/user/mypage</code></td><td>MypageController</td><td>マイページ (保存プラン・お気に入り)</td><td><span style="color:var(--danger)">要ログイン</span></td></tr>
+        <tr><td><span class="badge get">GET</span></td><td><code>/planner/form</code></td><td>PlannerController</td><td>AI旅行プラン入力フォーム</td><td>未要</td></tr>
+        <tr><td><span class="badge post">POST</span></td><td><code>/planner/generate</code></td><td>PlannerController</td><td>Gemini AI 旅行プラン生成</td><td>未要</td></tr>
+        <tr><td><span class="badge post">POST</span></td><td><code>/planner/save</code></td><td>PlannerController</td><td>生成プランをDB保存</td><td>未要</td></tr>
+        <tr><td><span class="badge get">GET</span></td><td><code>/gourmet</code></td><td>GourmetController</td><td>グルメ探索ページ (Google Places)</td><td>未要</td></tr>
+        <tr><td><span class="badge get">GET</span></td><td><code>/weather</code></td><td>WeatherController</td><td>天気予報ページ (Open-Meteo)</td><td>未要</td></tr>
+        <tr><td><span class="badge post">POST</span></td><td><code>/api/wishlist/toggle</code></td><td>WishlistApiController</td><td>お気に入り登録/解除 (AJAX)</td><td><span style="color:var(--danger)">要ログイン</span></td></tr>
+        <tr><td><span class="badge get">GET</span></td><td><code>/board/list</code></td><td>BoardController</td><td>旅行記事 一覧</td><td>未要</td></tr>
+        <tr><td><span class="badge get">GET</span></td><td><code>/admin/**</code></td><td>Admin系Controller</td><td>管理者ダッシュボード</td><td><span style="color:var(--danger)">ADMIN専用</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Security -->
+  <div class="section">
+    <div class="section-title"><i class="bi bi-shield-lock"></i> Spring Security 設定概要</div>
+    <table>
+      <thead><tr><th>経路パターン</th><th>アクセス制御</th></tr></thead>
+      <tbody>
+        <tr><td><code>/</code>, <code>/user/**</code>, <code>/css/**</code>, <code>/js/**</code> etc.</td><td>全員アクセス可能 (permitAll)</td></tr>
+        <tr><td><code>/admin/**</code></td><td>ROLE_ADMIN のみ</td></tr>
+        <tr><td>上記以外のすべての経路</td><td>ログイン済みユーザーのみ (authenticated)</td></tr>
+        <tr><td>ログイン成功</td><td>メインページ <code>/</code> へリダイレクト</td></tr>
+        <tr><td>ログアウト</td><td>セッション破棄 + JSESSIONID クッキー削除</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</body>
+</html>

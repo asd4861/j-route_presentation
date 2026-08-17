@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>要件事項分析設計図 — J-Route</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+<style>
+  :root{--primary:#6366f1;--accent:#ff8c69;--success:#34d399;--danger:#f87171;--bg:#0d0f1a;--card:#161929;--border:rgba(255,255,255,0.08);--text:#e2e8f0;--muted:#94a3b8;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;padding:40px 24px;min-height:100vh;}
+  .container{max-width:960px;margin:0 auto;}
+  .back{display:inline-flex;align-items:center;gap:8px;color:var(--muted);text-decoration:none;font-size:0.88rem;margin-bottom:32px;transition:color .2s;}
+  .back:hover{color:var(--primary);}
+  .doc-header{margin-bottom:36px;}
+  .doc-tag{display:inline-block;background:rgba(99,102,241,0.15);color:var(--primary);border:1px solid rgba(99,102,241,0.3);border-radius:20px;padding:4px 14px;font-size:0.78rem;font-weight:600;letter-spacing:.05em;margin-bottom:14px;}
+  h1{font-size:2rem;font-weight:700;margin-bottom:8px;}
+  .doc-meta{color:var(--muted);font-size:0.88rem;}
+  .section{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px 32px;margin-bottom:24px;}
+  .section-title{font-size:1rem;font-weight:700;color:var(--primary);margin-bottom:20px;display:flex;align-items:center;gap:8px;padding-bottom:12px;border-bottom:1px solid var(--border);}
+  table{width:100%;border-collapse:collapse;font-size:0.88rem;}
+  th{background:rgba(99,102,241,0.1);color:var(--primary);font-weight:600;padding:10px 14px;text-align:left;border-bottom:1px solid var(--border);}
+  td{padding:10px 14px;border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:top;line-height:1.6;}
+  tr:last-child td{border-bottom:none;}
+  .badge{display:inline-block;padding:2px 10px;border-radius:20px;font-size:0.75rem;font-weight:600;}
+  .badge-req{background:rgba(99,102,241,0.15);color:var(--primary);}
+  .badge-done{background:rgba(52,211,153,0.15);color:var(--success);}
+  .badge-high{background:rgba(248,113,113,0.15);color:var(--danger);}
+  .badge-mid{background:rgba(251,191,36,0.15);color:#fbbf24;}
+  .badge-low{background:rgba(148,163,184,0.15);color:var(--muted);}
+</style>
+</head>
+<body>
+<div class="container">
+  <a href="index.html#slide-5" class="back"><i class="bi bi-arrow-left"></i> 発表に戻る</a>
+  <div class="doc-header">
+    <div class="doc-tag">① 要件事項分析設計図</div>
+    <h1>機能要件 &amp; 非機能要件リスト</h1>
+    <p class="doc-meta">J-Route プロジェクト &nbsp;·&nbsp; 2024 - 2025 &nbsp;·&nbsp; チーム3名</p>
+  </div>
+
+  <!-- 機能要件 -->
+  <div class="section">
+    <div class="section-title"><i class="bi bi-check2-square"></i> 機能要件 (Functional Requirements)</div>
+    <table>
+      <thead><tr><th style="width:60px;">ID</th><th style="width:120px;">モジュール</th><th>要件説明</th><th style="width:80px;">優先度</th><th style="width:80px;">状態</th></tr></thead>
+      <tbody>
+        <tr><td>FR-01</td><td>会員管理</td><td>ユーザーはメールアドレス (username) とパスワードで会員登録できる。パスワードはBCrypt一方向暗号化で保存する。</td><td><span class="badge badge-high">High</span></td><td><span class="badge badge-done">完了</span></td></tr>
+        <tr><td>FR-02</td><td>会員管理</td><td>ログイン / ログアウト機能。Spring Securityフォームログインを使用。</td><td><span class="badge badge-high">High</span></td><td><span class="badge badge-done">完了</span></td></tr>
+        <tr><td>FR-03</td><td>会員管理</td><td>マイページ: 保存した旅行プラン・お気に入りリストを一覧表示できる。</td><td><span class="badge badge-high">High</span></td><td><span class="badge badge-done">完了</span></td></tr>
+        <tr><td>FR-04</td><td>会員管理</td><td>プロフィール情報 (ニックネーム) の修正及びパスワード変更機能。</td><td><span class="badge badge-mid">Mid</span></td><td><span class="badge badge-done">完了</span></td></tr>
+        <tr><td>FR-05</td><td>AIプランナー</td><td>地域 / 旅行日数 / テーマを入力するとGemini AIが旅行日程 (JSON) を自動生成する。</td><td><span class="badge badge-high">High</span></td><td><span class="badge badge-done">完了</span></td></tr>
+        <tr><td>FR-06</td><td>AIプランナー</td><td>AIが生成した旅行プランをDBに保存 (永続化) し、マイページで確認できる。</td><td><span class="badge badge-high">High</span></td><td><span class="badge badge-done">完了</span></td></tr>
+        <tr><td>FR-07</td><td>AIプランナー</td><td>保存プランの公開 / 非公開設定及び削除機能。</td><td><span class="badge badge-mid">Mid</span></td><td><span class="badge badge-done">完了</span></td></tr>
+        <tr><td>FR-08</td><td>グルメ探索</td><td>Google Places APIを使用して目的地周辺のグルメ・カフェをリアルタイム検索。</td><td><span class="badge badge-high">High</span></td><td><span class="badge badge-done">完了</span></td></tr>
+        <tr><td>FR-09</td><td>グルメ探索</td><td>検索結果を地図マーカーとカードリストで連動表示 (Google Maps SDK)。</td><td><span class="badge badge-high">High</span></td><td><span class="badge badge-done">完了</span></td></tr>
+        <tr><td>FR-10</td><td>天気予報</td><td>Open-Meteo APIを使用して都市別16日間の気象予報データを取得・表示。</td><td><span class="badge badge-high">High</span></td><td><span class="badge badge-done">完了</span></td></tr>
+        <tr><td>FR-11</td><td>天気予報</td><td>気象データに基づく服装ガイドを提案。Chart.jsで気温グラフを可視化。</td><td><span class="badge badge-mid">Mid</span></td><td><span class="badge badge-done">完了</span></td></tr>
+        <tr><td>FR-12</td><td>ウィッシュリスト</td><td>グルメ・AI日程・観光地をAJAX非同期でお気に入り登録／解除できる (画面更新なし)。</td><td><span class="badge badge-high">High</span></td><td><span class="badge badge-done">完了</span></td></tr>
+        <tr><td>FR-13</td><td>掲示板</td><td>旅行記事の投稿 / 編集 / 削除 / 一覧表示 / 詳細表示機能。</td><td><span class="badge badge-mid">Mid</span></td><td><span class="badge badge-done">完了</span></td></tr>
+        <tr><td>FR-14</td><td>掲示板</td><td>コメント投稿 / 削除機能。</td><td><span class="badge badge-mid">Mid</span></td><td><span class="badge badge-done">完了</span></td></tr>
+        <tr><td>FR-15</td><td>管理者</td><td>管理者ダッシュボード: 会員管理、投稿管理、レビュー管理。</td><td><span class="badge badge-low">Low</span></td><td><span class="badge badge-done">完了</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 非機能要件 -->
+  <div class="section">
+    <div class="section-title"><i class="bi bi-shield-check"></i> 非機能要件 (Non-Functional Requirements)</div>
+    <table>
+      <thead><tr><th style="width:60px;">ID</th><th style="width:120px;">カテゴリ</th><th>要件説明</th><th style="width:80px;">優先度</th></tr></thead>
+      <tbody>
+        <tr><td>NFR-01</td><td>セキュリティ</td><td>パスワードはBCryptハッシュ化必須。平文保存禁止。</td><td><span class="badge badge-high">High</span></td></tr>
+        <tr><td>NFR-02</td><td>セキュリティ</td><td>未認証ユーザーのアクセス制御: 認証が必要なページへのアクセス時はログインページへリダイレクト。</td><td><span class="badge badge-high">High</span></td></tr>
+        <tr><td>NFR-03</td><td>セキュリティ</td><td>管理者 (ROLE_ADMIN) のみアクセス可能な /admin/** エンドポイントの保護。</td><td><span class="badge badge-high">High</span></td></tr>
+        <tr><td>NFR-04</td><td>データ整合性</td><td>URLなど長文データはVARCHAR(255)ではなくTEXT型で保存する。</td><td><span class="badge badge-high">High</span></td></tr>
+        <tr><td>NFR-05</td><td>応答性</td><td>AI応答はHTTPストリーミングまたは非同期で処理し、UIがフリーズしないよう設計する。</td><td><span class="badge badge-high">High</span></td></tr>
+        <tr><td>NFR-06</td><td>拡張性</td><td>ウィッシュリストはcategoryカラムで複数アイテムタイプ (PLACE / AI / HOTEL / FLIGHT) を単一テーブルで管理する。</td><td><span class="badge badge-mid">Mid</span></td></tr>
+        <tr><td>NFR-07</td><td>保守性</td><td>MyBatisアノテーション & XMLを併用し、クエリの可読性と保守性を確保する。</td><td><span class="badge badge-mid">Mid</span></td></tr>
+        <tr><td>NFR-08</td><td>UI/UX</td><td>レスポンシブデザイン対応。モバイルでも基本的な操作が可能であること。</td><td><span class="badge badge-mid">Mid</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</body>
+</html>

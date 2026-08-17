@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>画面設計図 UI/UX — J-Route</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+<style>
+  :root{--primary:#6366f1;--accent:#ff8c69;--success:#34d399;--danger:#f87171;--bg:#0d0f1a;--card:#161929;--border:rgba(255,255,255,0.08);--text:#e2e8f0;--muted:#94a3b8;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;padding:40px 24px;min-height:100vh;}
+  .container{max-width:960px;margin:0 auto;}
+  .back{display:inline-flex;align-items:center;gap:8px;color:var(--muted);text-decoration:none;font-size:0.88rem;margin-bottom:32px;transition:color .2s;}
+  .back:hover{color:var(--primary);}
+  .doc-tag{display:inline-block;background:rgba(255,140,105,0.15);color:var(--accent);border:1px solid rgba(255,140,105,0.3);border-radius:20px;padding:4px 14px;font-size:0.78rem;font-weight:600;margin-bottom:14px;}
+  h1{font-size:2rem;font-weight:700;margin-bottom:8px;}
+  .doc-meta{color:var(--muted);font-size:0.88rem;margin-bottom:36px;}
+  .section{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px 32px;margin-bottom:24px;}
+  .section-title{font-size:1rem;font-weight:700;color:var(--accent);margin-bottom:20px;display:flex;align-items:center;gap:8px;padding-bottom:12px;border-bottom:1px solid var(--border);}
+  /* Screen flow */
+  .flow{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start;}
+  .screen{background:rgba(255,140,105,0.06);border:1px solid rgba(255,140,105,0.25);border-radius:12px;padding:14px 16px;min-width:160px;flex:1;}
+  .screen .url{font-size:0.72rem;color:var(--muted);font-family:monospace;margin-bottom:6px;}
+  .screen .name{font-weight:700;font-size:0.9rem;color:#fff;margin-bottom:8px;}
+  .screen ul{font-size:0.8rem;color:var(--muted);padding-left:14px;line-height:1.9;}
+  .arrow{color:var(--muted);font-size:1.4rem;align-self:center;}
+  /* Component list */
+  table{width:100%;border-collapse:collapse;font-size:0.86rem;}
+  th{background:rgba(255,140,105,0.1);color:var(--accent);font-weight:600;padding:10px 14px;text-align:left;border-bottom:1px solid var(--border);}
+  td{padding:9px 14px;border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:top;line-height:1.6;}
+  tr:last-child td{border-bottom:none;}
+  code{background:rgba(255,140,105,0.1);color:var(--accent);padding:1px 7px;border-radius:4px;font-size:0.8rem;}
+  .badge{display:inline-block;padding:2px 9px;border-radius:20px;font-size:0.73rem;font-weight:600;}
+  .badge-comp{background:rgba(99,102,241,0.15);color:var(--primary);}
+</style>
+</head>
+<body>
+<div class="container">
+  <a href="index.html#slide-5" class="back"><i class="bi bi-arrow-left"></i> 発表に戻る</a>
+  <div class="doc-tag">③ 画面実装設計図 (UI/UX)</div>
+  <h1>画面遷移図 · コンポーネント設計</h1>
+  <p class="doc-meta">J-Route プロジェクト &nbsp;·&nbsp; Thymeleaf / JavaScript / Bootstrap Icons</p>
+
+  <!-- Screen Flow -->
+  <div class="section">
+    <div class="section-title"><i class="bi bi-signpost-split"></i> 主要画面遷移フロー</div>
+    <div style="margin-bottom:20px;">
+      <p style="font-size:0.85rem;color:var(--muted);margin-bottom:16px;">① ログイン前のユーザーフロー</p>
+      <div class="flow">
+        <div class="screen"><div class="url">/</div><div class="name">🏠 メイン</div><ul><li>サービス紹介</li><li>ナビゲーション</li></ul></div>
+        <div class="arrow">→</div>
+        <div class="screen"><div class="url">/user/login</div><div class="name">🔐 ログイン</div><ul><li>ID/PW入力</li><li>エラーメッセージ</li></ul></div>
+        <div class="arrow">→</div>
+        <div class="screen"><div class="url">/</div><div class="name">✅ ログイン成功</div><ul><li>メインへリダイレクト</li><li>ヘッダー変化</li></ul></div>
+      </div>
+    </div>
+    <div style="margin-bottom:20px;">
+      <p style="font-size:0.85rem;color:var(--muted);margin-bottom:16px;">② AI 旅行プランナーフロー</p>
+      <div class="flow">
+        <div class="screen"><div class="url">/planner/form</div><div class="name">📝 入力フォーム</div><ul><li>地域選択</li><li>日数入力</li><li>テーマ選択</li></ul></div>
+        <div class="arrow">→</div>
+        <div class="screen"><div class="url">POST /planner/generate</div><div class="name">🤖 AI生成中</div><ul><li>ローディング表示</li><li>Gemini API呼出</li></ul></div>
+        <div class="arrow">→</div>
+        <div class="screen"><div class="url">/planner/result</div><div class="name">📋 結果表示</div><ul><li>日程カード表示</li><li>保存ボタン</li></ul></div>
+        <div class="arrow">→</div>
+        <div class="screen"><div class="url">/user/mypage</div><div class="name">👤 マイページ</div><ul><li>保存プラン一覧</li><li>お気に入り一覧</li></ul></div>
+      </div>
+    </div>
+    <div>
+      <p style="font-size:0.85rem;color:var(--muted);margin-bottom:16px;">③ グルメ探索フロー</p>
+      <div class="flow">
+        <div class="screen"><div class="url">/gourmet</div><div class="name">🍜 グルメ探索</div><ul><li>都市入力</li><li>カテゴリ選択</li></ul></div>
+        <div class="arrow">→</div>
+        <div class="screen"><div class="url">Google Places API</div><div class="name">📍 地図表示</div><ul><li>マーカー連動</li><li>カード表示</li></ul></div>
+        <div class="arrow">→</div>
+        <div class="screen"><div class="url">POST /api/wishlist</div><div class="name">❤️ お気に入り</div><ul><li>AJAX非同期</li><li>即時UI反映</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Component List -->
+  <div class="section">
+    <div class="section-title"><i class="bi bi-puzzle"></i> 主要 Thymeleaf コンポーネント一覧</div>
+    <table>
+      <thead><tr><th>コンポーネント / テンプレート</th><th>パス</th><th>説明</th></tr></thead>
+      <tbody>
+        <tr><td><span class="badge badge-comp">Layout</span> 共通レイアウト</td><td><code>layout/default.html</code></td><td>ヘッダー・フッターを含む全ページ共通枠。Thymeleaf Layout Dialect使用。</td></tr>
+        <tr><td><span class="badge badge-comp">Page</span> メインページ</td><td><code>index.html</code></td><td>サービス紹介・ナビゲーション。ログイン状態によってUIを切り替え。</td></tr>
+        <tr><td><span class="badge badge-comp">Page</span> ログイン</td><td><code>user/login.html</code></td><td>Spring Security loginProcessingUrl="/loginProc" に接続。エラー時メッセージ表示。</td></tr>
+        <tr><td><span class="badge badge-comp">Page</span> 会員登録</td><td><code>user/register.html</code></td><td>ID・パスワード・ニックネーム入力。バリデーション後DBへ保存。</td></tr>
+        <tr><td><span class="badge badge-comp">Page</span> マイページ</td><td><code>user/mypage.html</code></td><td>保存した旅行プランと各カテゴリのウィッシュリストをタブで表示。</td></tr>
+        <tr><td><span class="badge badge-comp">Page</span> AIプランナー</td><td><code>planner/form.html</code></td><td>地域・日数・テーマの入力フォーム。送信後AI生成ページへ遷移。</td></tr>
+        <tr><td><span class="badge badge-comp">Page</span> グルメ探索</td><td><code>gourmet/index.html</code></td><td>Google Maps SDKを埋め込み。Places API検索結果をマーカー＆カードで表示。</td></tr>
+        <tr><td><span class="badge badge-comp">Page</span> 天気予報</td><td><code>weather/index.html</code></td><td>都市名入力→Open-Meteo呼出→Chart.js気温グラフ＆服装提案表示。</td></tr>
+        <tr><td><span class="badge badge-comp">Page</span> 掲示板</td><td><code>board/list.html</code></td><td>旅行記事一覧。地域・期間でのフィルタリング。</td></tr>
+        <tr><td><span class="badge badge-comp">Fragment</span> ウィッシュリストボタン</td><td><code>fragments/wishBtn.html</code></td><td>各ページのお気に入りボタン。AJAX POSTでトグル処理を実装。</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Design System -->
+  <div class="section">
+    <div class="section-title"><i class="bi bi-palette"></i> デザインシステム</div>
+    <table>
+      <thead><tr><th style="width:150px;">要素</th><th>採用内容</th></tr></thead>
+      <tbody>
+        <tr><td>フォント</td><td>Inter (Google Fonts) — ウェイト 400 / 600 / 700</td></tr>
+        <tr><td>カラーパレット</td><td>メインアクセントカラー: <span style="color:#6366f1;">#6366f1</span> (Indigo)、補助: <span style="color:#34d399;">#34d399</span> (Green)、警告: <span style="color:#f87171;">#f87171</span> (Red)</td></tr>
+        <tr><td>アイコン</td><td>Bootstrap Icons 1.11</td></tr>
+        <tr><td>アニメーション</td><td>CSS transition / transform によるホバーエフェクト</td></tr>
+        <tr><td>レスポンシブ</td><td>CSS Flexbox / Grid でモバイル対応</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</body>
+</html>
